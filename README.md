@@ -19,7 +19,7 @@ GET  /?currentPage=1&productsPerPage=10
 - {key} can be title,description,price or rating
 
 ```sh
-GET /sort={key}-desc&currentPage=1&productsPerPage=10
+GET /?sort={key}-desc&currentPage=1&productsPerPage=10
 ```
 
 #### Get single product
