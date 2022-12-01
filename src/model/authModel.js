@@ -6,6 +6,7 @@ const authModel = new mongoose.Schema({
     lowercase: true,
     trim: true,
     required: [true, "username is required field"],
+    unique: true,
   },
   email: {
     type: String,
