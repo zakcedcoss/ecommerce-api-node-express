@@ -16,8 +16,6 @@ const authModel = new mongoose.Schema({
   },
   password: {
     type: String,
-    lowercase: true,
-    trim: true,
     required: [true, "password is required field"],
   },
 });

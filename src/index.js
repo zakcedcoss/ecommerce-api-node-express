@@ -5,6 +5,7 @@ const app = express();
 const PORT = process.env.PORT ?? 5555;
 // router
 const productRouter = require("./routes/productRoutes");
+const authRouter = require("./routes/authRoutes");
 // db
 const connectDb = require("./db/connection");
 const errorMiddleware = require("./middlewares/errorMiddleware");
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1/products", productRouter);
+app.use("/auth", authRouter);
 
 app.use(errorMiddleware);
 
