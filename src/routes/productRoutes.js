@@ -8,8 +8,8 @@ const {
   getAllProductsByCategory,
 } = require("../controllers/productControllers");
 
-router.route("/").get(protect, getAllProducts).post(addProduct);
-router.route("/categories").get(getAllCategories);
+router.route("/").get(getAllProducts).post(protect, addProduct);
+router.route("/categories").get(protect, getAllCategories);
 router.route("/category").get(getAllProductsByCategory);
 router.route("/:id").get(getSingleProduct);
 

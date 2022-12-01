@@ -37,6 +37,10 @@ const getSingleProduct = (req, res) => {
 };
 
 const addProduct = expressAsyncHandler(async (req, res) => {
+  const { username, email } = req.user;
+  if (username !== "admin" || !email.includes("goat.me")) {
+    throw new Error("Only admin have access to this route");
+  }
   const product = req.body;
   if (!product) {
     throw new Error("Please provide product details");
