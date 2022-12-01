@@ -4,9 +4,11 @@ const jwt = require("jsonwebtoken");
 const Auth = require("../model/authModel");
 
 const login = expressAsyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  const { credentials, password } = req.body;
 
-  const user = await Auth.findOne({ email });
+  const user = await Auth.findOne({
+    $or: [{ email: credentials }, { username: credentials }],
+  });
   if (!user) {
     throw new Error("User does not exists.");
   }
@@ -26,22 +28,20 @@ const login = expressAsyncHandler(async (req, res) => {
     { expiresIn: "5d" }
   );
 
-  res
-    .status(200)
-    .json({
-      user_id: user._id,
-      username: user.username,
-      email: user.email,
-      token,
-    });
+  res.status(200).json({
+    user_id: user._id,
+    username: user.username,
+    email: user.email,
+    token,
+  });
 });
 
 const register = expressAsyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
 
-  const foundUser = await Auth.findOne({ email });
+  const foundUser = await Auth.findOne({ $or: [{ email }, { username }] });
   if (foundUser) {
-    throw new Error("User already exists");
+    throw new Error("username or email already exists");
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
