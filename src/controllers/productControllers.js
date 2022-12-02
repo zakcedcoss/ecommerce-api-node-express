@@ -84,16 +84,24 @@ const addProduct = expressAsyncHandler(async (req, res) => {
 });
 
 const deleteSingleProduct = expressAsyncHandler(async (req, res) => {
+  const { username, email } = req.user;
+  if (username !== "admin" || !email.includes("goat.me")) {
+    throw new Error("Only admin have access to this route");
+  }
   const { id } = req.params;
   const deletedProduct = await Products.findByIdAndDelete(id);
 
   if (!deletedProduct) {
     throw new Error("product not found");
   }
-  res.status(200).json("product deleted");
+  res.status(200).json({ message: "product deleted" });
 });
 
 const updateSingleProduct = expressAsyncHandler(async (req, res) => {
+  const { username, email } = req.user;
+  if (username !== "admin" || !email.includes("goat.me")) {
+    throw new Error("Only admin have access to this route");
+  }
   const { id } = req.params;
   const updatedProduct = await Products.findByIdAndUpdate(id, req.body);
 
@@ -101,7 +109,7 @@ const updateSingleProduct = expressAsyncHandler(async (req, res) => {
     throw new Error("product not found");
   }
 
-  res.status(200).json({ message: `product details updated` });
+  res.status(200).json({ message: "product details updated" });
 });
 
 module.exports = {

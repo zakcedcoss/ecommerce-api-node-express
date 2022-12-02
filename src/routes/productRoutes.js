@@ -17,6 +17,6 @@ router
   .route("/:id")
   .get(getSingleProduct)
   .delete(protect, deleteSingleProduct)
-  .patch(updateSingleProduct);
+  .patch(protect, updateSingleProduct);
 
 module.exports = router;
