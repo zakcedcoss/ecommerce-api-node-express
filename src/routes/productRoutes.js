@@ -6,11 +6,17 @@ const {
   getSingleProduct,
   getAllCategories,
   getAllProductsByCategory,
+  deleteSingleProduct,
+  updateSingleProduct,
 } = require("../controllers/productControllers");
 
 router.route("/").get(getAllProducts).post(protect, addProduct);
 router.route("/categories").get(getAllCategories);
 router.route("/category").get(getAllProductsByCategory);
-router.route("/:id").get(getSingleProduct);
+router
+  .route("/:id")
+  .get(getSingleProduct)
+  .delete(protect, deleteSingleProduct)
+  .patch(updateSingleProduct);
 
 module.exports = router;
